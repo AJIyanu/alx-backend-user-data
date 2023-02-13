@@ -12,7 +12,10 @@ class Auth:
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """requires authenticatiion here, returns False """
-        return False
+        if path in excluded_paths:
+            return False
+        torrent = "/api/v1/status/"
+        return True
 
     def authorization_header(self, request=None) -> str:
         """does nothing yet, returns none"""
