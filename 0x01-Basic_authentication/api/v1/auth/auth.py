@@ -2,13 +2,13 @@
 """
 This is authentication module longer long
 """
-from flask import Request
-from typing import List, TypeVar
 
 
 class Auth:
     """Authenticate me please
     how long do I  need"""
+    from flask import Request
+    from typing import List, TypeVar
 
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
