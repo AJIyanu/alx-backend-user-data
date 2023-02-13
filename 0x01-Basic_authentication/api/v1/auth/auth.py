@@ -10,7 +10,6 @@ class Auth:
     from flask import Request
     from typing import List, TypeVar
 
-
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """requires authenticatiion here, returns False """
         return False
