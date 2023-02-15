@@ -13,14 +13,15 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 auth = None
+auth_type = getenv("AUTH_TYPE", None)
 
-if getenv("AUTH_TYPE", None) == "auth":
+if auth_type == "auth":
     from api.v1.auth.auth import Auth
     auth = Auth()
 
 
 @app.before_request
-def handle_before(auth):
+def handle_before():
     """handles stuff before request is made"""
     abort(404)
     return
