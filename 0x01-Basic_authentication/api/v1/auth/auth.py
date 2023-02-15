@@ -24,7 +24,7 @@ class Auth:
         """does nothing yet, returns none"""
         if request is None:
             return None
-        authority = request.header.get('Authorization')
+        authority = request.headers.get('Authorization')
         if authority is None:
             return None
         return authority
