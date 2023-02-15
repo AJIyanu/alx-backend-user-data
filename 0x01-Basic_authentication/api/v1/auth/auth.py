@@ -14,7 +14,8 @@ class Auth:
         """requires authenticatiion here, returns False """
         if path in excluded_paths:
             return False
-        torrent = "/api/v1/status/"
+        if "/api/v1/status/" in excluded_paths and path == "/api/v1/status":
+            return False
         return True
 
     def authorization_header(self, request=None) -> str:
