@@ -23,7 +23,7 @@ if auth_type == "auth":
 @app.before_request
 def handle_before():
     """handles stuff before request is made"""
-    abort(404)
+    abort(403)
     return
     nothing = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
     if auth is None:
