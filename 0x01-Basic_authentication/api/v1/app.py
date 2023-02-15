@@ -25,9 +25,9 @@ def handle_before():
     """handles stuff before request is made"""
     nothing = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
     if auth is None:
-        pass
+        return
     if auth.require_auth(request.path, nothing):
-        pass
+        return
     if auth.authorization_header(request) is None:
         abort(401)
         return None
