@@ -22,7 +22,8 @@ if getenv("AUTH_TYPE", None) is not None:
 @app.before_request
 def handle_before(auth):
     """handles stuff before request is made"""
-    print("we are here")
+    abort(404)
+    return
     nothing = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
     if auth is None:
         pass
