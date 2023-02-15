@@ -7,7 +7,7 @@ This is authentication module longer long
 class Auth:
     """Authenticate me please
     how long do I  need"""
-    from flask import Request
+    from flask import request
     from typing import List, TypeVar
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
@@ -22,7 +22,12 @@ class Auth:
 
     def authorization_header(self, request=None) -> str:
         """does nothing yet, returns none"""
-        return None
+        if request is None:
+            return None
+        authority = request.header.get('Authorization')
+        if authority is None:
+            return None
+        return authority
 
     def current_user(self, request=None) -> TypeVar('User'):
         """does nothing too, returns none"""
