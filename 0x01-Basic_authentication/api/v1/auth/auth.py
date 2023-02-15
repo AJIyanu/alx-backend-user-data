@@ -12,6 +12,8 @@ class Auth:
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """requires authenticatiion here, returns False """
+        if excluded_paths is None:
+            return True
         if path in excluded_paths:
             return False
         if "/api/v1/status/" in excluded_paths and path == "/api/v1/status":
