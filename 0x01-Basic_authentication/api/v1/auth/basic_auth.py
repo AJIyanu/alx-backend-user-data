@@ -11,9 +11,10 @@ class BasicAuth(Auth):
 
     def extract_base64_authorization_header(self, authorization_header: str) -> str:
         """extract base64 authorizzation header"""
+        print("debug1")
         if authorization_header is None or authorization_header is not str:
             return None
-        print("debug")
+        print("debug2")
         if "Basic " not in authorization_header:
             return None
         else:
