@@ -27,10 +27,10 @@ def handle_before(auth):
         pass
     if auth.require_auth(request.path, nothing):
         pass
-    if auth.authorization_header(request):
+    if auth.authorization_header(request) is None:
         abort(401)
         return None
-    if auth.current_user(request):
+    if auth.current_user(request) is None:
         abort(403)
         return None
 
