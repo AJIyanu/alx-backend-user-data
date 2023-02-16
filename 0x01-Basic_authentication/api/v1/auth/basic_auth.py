@@ -3,6 +3,13 @@
 Basic Authentication, child of Auth
 """
 from .auth import Auth
+from typing import TypeVar
+import os
+import sys
+
+
+parent_dir = os.path.abspath(os.path.join('models'))
+sys.path.insert(0, parent_dir)
 
 
 class BasicAuth(Auth):
@@ -47,3 +54,21 @@ class BasicAuth(Auth):
             return (None, None)
         split = decoded_base64_authorization_header.split(":")
         return (split[0], split[1])
+
+    def user_object_from_credentials(self,
+                                     user_email: str,
+                                     user_pwd: str) -> TypeVar('User'):
+        """returns users based on email"""
+        if user_email is None or type(user_email) is not str:
+            return None
+        if user_pwd is None or type(user_pwd) is not str:
+            return None
+        from models.user import User
+        from models.base import DATA
+        User.load_from_file()
+        for uses in DATA['User']:
+            if DATA['User'][uses].email == user_email:
+                if DATA['User'][uses].is_valid_password(user_pwd):
+                    return DATA['User'][uses]
+                return None
+        return None
