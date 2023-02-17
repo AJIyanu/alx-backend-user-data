@@ -15,10 +15,10 @@ class Auth:
         if excluded_paths is None:
             return True
         for pat in excluded_paths:
-            if "*" in pat:
-                patsplit = pat.split()
-                if patsplit[0] in path:
-                    return False
+            if type(pat) is list:
+                for pat1 in pat:
+                    if pat1.split("*")[0] in path:
+                        return False
         if path in excluded_paths:
             return False
         if "/api/v1/status/" in excluded_paths and path == "/api/v1/status":
