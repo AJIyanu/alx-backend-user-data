@@ -72,3 +72,12 @@ class BasicAuth(Auth):
                     return DATA['User'][uses]
                 return None
         return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """Returns a user after validation"""
+        authority64 = self.authorization_header(request)
+        user64 = self.extract_base64_authorization_header(authority64)
+        user = self.decode_base64_authorization_header(user64)
+        user = self.extract_user_credentials(user)
+        user = self.user_object_from_credentials(user[0], user[1])
+        return user
