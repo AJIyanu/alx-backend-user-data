@@ -32,9 +32,10 @@ class DB:
 
     def add_user(self, email, hsh_pwd) -> User:
         """adds and return user to and from database"""
-        New = User()
-        New.email = email
-        New.hashed_password = hsh_pwd
-        self.__session.add(New)
+        new = User()
+        new.email = email
+        new.hashed_password = hsh_pwd
+        self._session()
+        self.__session.add(new)
         self.__session.commit()
-        return New
+        return new
