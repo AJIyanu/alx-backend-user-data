@@ -8,10 +8,10 @@ from flask import Flask, jsonify
 app = Flask(__name__)
 
 
-@app.route('/', method=["GET"], strict_slashes=False)
+@app.route('/', methods=["GET"], strict_slashes=False)
 def payload() -> str:
     """return payload jsonify"""
-    return jsonify {"message": "Bienvenue"}
+    return jsonify({"message": "Bienvenue"})
 
 
 if __name__ == "__main__":
