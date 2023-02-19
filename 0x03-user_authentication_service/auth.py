@@ -46,4 +46,5 @@ def _hash_password(password: str) -> bytes:
     import bcrypt
 
     salt = "rSHyS1at74eSeJ71"
+    salt = salt.encode('utf-8')
     return bcrypt.hashpw(password.encode('utf-8'), salt)
