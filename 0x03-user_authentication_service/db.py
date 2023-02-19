@@ -39,3 +39,9 @@ class DB:
         Session.add(new)
         Session.commit()
         return new
+
+    def find_user_by(self, **kwargs: dict) -> User:
+        """find user and return"""
+        Session = self._session
+        Query = Session.query(User).filter_by(**kwargs)
+        return Query.first()
