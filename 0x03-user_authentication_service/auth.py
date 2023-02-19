@@ -39,6 +39,17 @@ class Auth:
             return False
         return False
 
+    def create_session(email: str) -> str:
+        """creates session id for email"""
+        db = self._db
+        try:
+            user =  db.find_user_by(email=email)
+        except Exception:
+            return None
+        uid = _generate_uuid()
+        db.update_user(user.id, session_id=uid)
+        return uid
+
 
 def _hash_password(password: str) -> bytes:
     """returns a byted hashed password"""
