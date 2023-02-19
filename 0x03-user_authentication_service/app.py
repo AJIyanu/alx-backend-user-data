@@ -2,7 +2,7 @@
 """crrating a basic flask app"""
 
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, make_response, abort
 from auth import Auth
 
 
@@ -34,9 +34,13 @@ def sessions() -> str:
     """make a seesiom id cookes"""
     email = request.form.get("email")
     password = request.form.get("password")
-    if email is not None and password is nog None:
-        i
-
+    if AUTH.valid_user(email, password):
+        session_id = AUTH.create_session(email)
+    else:
+        abort(401)
+    resp = make_response('nothing, absolutely nothing')
+    resp.set_cookie('session_id', session_id)
+    return jsonify({"email": email, "message": "logged in"})
 
 
 if __name__ == "__main__":
