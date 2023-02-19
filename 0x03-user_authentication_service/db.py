@@ -41,10 +41,10 @@ class DB:
         Session.commit()
         return new
 
-    def find_user_by(self, **kwargs: dict) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """find user and return"""
         Session = self._session
         Query = Session.query(User).filter_by(**kwargs)
-        if Query is None:
+        if Query.first() is None:
             raise NoResultFound
         return Query.first()
