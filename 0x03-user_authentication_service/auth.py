@@ -29,6 +29,7 @@ class Auth:
 
     def valid_login(self, email: str, password: str) -> bool:
         """checks if passwodd is falid"""
+        import bcrypt
         db = self._db
         try:
             user = db.find_user_by(email=email)
