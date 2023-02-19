@@ -34,7 +34,7 @@ class Auth:
         try:
             user = db.find_user_by(email=email)
             hsh_pwd = _hash_password(password)
-            if bcrypt.checkpw(user.password, hsh_pwd):
+            if bcrypt.checkpw(user.hashed_password, hsh_pwd):
                 return True
         except NoResultFound:
             return False
