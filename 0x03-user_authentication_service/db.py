@@ -60,5 +60,3 @@ class DB:
             setattr(update_me, attr, kwargs[attr])
             Session.flush()
         Session.commit()
-
-
