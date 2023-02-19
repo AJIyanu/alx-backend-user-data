@@ -48,3 +48,12 @@ class DB:
         if Query.first() is None:
             raise NoResultFound
         return Query.first()
+
+    def DB.update_user(self, user_id: int, **kwargs) -> None:
+        """update the user’s attributes as passed in the method’s arguments"""
+        update_me = self.find_user_by(id=user_id)
+        for attr in kwargs:
+            try:
+                update_me[attr] = kwargs[attr]
+            except Exception:
+                raise ValueError
