@@ -39,11 +39,11 @@ class Auth:
             return False
         return False
 
-    def create_session(email: str) -> str:
+    def create_session(self, email: str) -> str:
         """creates session id for email"""
         db = self._db
         try:
-            user =  db.find_user_by(email=email)
+            user = db.find_user_by(email=email)
         except Exception:
             return None
         uid = _generate_uuid()
