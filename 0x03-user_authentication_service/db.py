@@ -37,5 +37,5 @@ class DB:
         new.hashed_password = hsh_pwd
         Session = self._session
         Session.add(new)
-        #Session.commit()
+        Session.commit()
         return new
