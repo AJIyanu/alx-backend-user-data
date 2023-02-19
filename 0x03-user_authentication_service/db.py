@@ -51,9 +51,14 @@ class DB:
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """update the user’s attributes as passed in the method’s arguments"""
+        Session = self._session
         update_me = self.find_user_by(id=user_id)
+        update_dict = update_me.__dict__
         for attr in kwargs:
-            try:
-                update_me[attr] = kwargs[attr]
-            except Exception:
+            if attr not in update_dict:
                 raise ValueError
+            setattr(update_me, attr, kwargs[attr])
+            Session.flush()
+        Session.commit()
+
+
