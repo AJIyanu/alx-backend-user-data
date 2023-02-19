@@ -34,7 +34,7 @@ def sessions() -> str:
     """make a seesiom id cookes"""
     email = request.form.get("email")
     password = request.form.get("password")
-    if AUTH.valid_user(email, password):
+    if AUTH.valid_login(email, password):
         session_id = AUTH.create_session(email)
     else:
         abort(401)
