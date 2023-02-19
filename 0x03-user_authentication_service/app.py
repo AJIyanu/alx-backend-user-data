@@ -29,5 +29,15 @@ def users() -> str:
             return jsonify({"message": "email already registered"}), 400
 
 
+@app.route("/sessions", methods=['POST'], strict_slashes=False)
+def sessions() -> str:
+    """make a seesiom id cookes"""
+    email = request.form.get("email")
+    password = request.form.get("password")
+    if email is not None and password is nog None:
+        i
+
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
