@@ -33,8 +33,7 @@ class Auth:
         db = self._db
         try:
             user = db.find_user_by(email=email)
-            hsh_pwd = _hash_password(password)
-            if bcrypt.checkpw(user.hashed_password, hsh_pwd):
+            if bcrypt.checkpw(password.encode('utf-8'), user.hashed_password):
                 return True
         except NoResultFound:
             return False
@@ -45,6 +44,5 @@ def _hash_password(password: str) -> bytes:
     """returns a byted hashed password"""
     import bcrypt
 
-    salt = "rSHyS1at74eSeJ71"
-    salt = salt.encode('utf-8')
+    salt = bcrypt.gensalt()
     return bcrypt.hashpw(password.encode('utf-8'), salt)
