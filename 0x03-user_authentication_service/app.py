@@ -66,6 +66,8 @@ def termux_test() -> make_response:
 def profile() -> str:
     """user profile getter"""
     res request.headers.get("Cookie")
+    if res is None:
+        abort(403)
     res = res.split("session_id")[-1]
     user = AUTH.get_user_from_session_id(res)
     if user is None:
