@@ -2,7 +2,8 @@
 """crrating a basic flask app"""
 
 
-from flask import Flask, jsonify, request, make_response, abort
+from flask import Flask, jsonify, request, make_response, abort, redirect
+from flask import url_for
 from auth import Auth
 
 
@@ -29,18 +30,49 @@ def users() -> str:
             return jsonify({"message": "email already registered"}), 400
 
 
-@app.route("/sessions", methods=['POST'], strict_slashes=False)
+@app.route("/sessions", methods=['POST', 'DELETE'], strict_slashes=False)
 def sessions() -> str:
-    """make a seesiom id cookes"""
+    """make a seesion id cookes"""
+    if request.method == 'DELETE':
+        res = request.headers.get('Cookie')
+        if res is not None:
+            res = res.split("session_id=")[-1]
+            user = AUTH.get_user_from_session_id(res)
+            if user is None:
+                abort(403)
+            AUTH.destroy_session(user.id)
+            return redirect(url_for('payload'))
+        abort(403)
     email = request.form.get("email")
     password = request.form.get("password")
     if AUTH.valid_login(email, password):
         session_id = AUTH.create_session(email)
     else:
         abort(401)
-    resp = make_response('nothing, absolutely nothing')
-    resp.set_cookie('session_id', str(session_id))
-    return jsonify({"email": email, "message": "logged in"})
+    resp = make_response(jsonify({"email": email, "message": "logged in"}))
+    resp.set_cookie('session_id', session_id)
+    return resp
+
+
+@app.route("/termux", methods=['GET'], strict_slashes=False)
+def termux_test() -> make_response:
+    """for termux testing only"""
+    resp = make_response(jsonify({"set cookie": "cookie"}))
+    resp.set_cookie("session_id", "setting cookies")
+    return resp
+
+
+@app.route("/profile", methods=['GET'], strict_slashes=False)
+def profile() -> str:
+    """user profile getter"""
+    res request.headers.get("Cookie")
+    if res is None:
+        abort(403)
+    res = res.split("session_id")[-1]
+    user = AUTH.get_user_from_session_id(res)
+    if user is None:
+        abort(403)
+    return jsonify({"email": user.email})
 
 
 if __name__ == "__main__":
