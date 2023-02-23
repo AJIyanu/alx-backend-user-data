@@ -2,7 +2,7 @@
 """crrating a basic flask app"""
 
 
-from flask import Flask, jsonify, request, make_response, abort
+from flask import Flask, jsonify, request, make_response, abort, Response
 from auth import Auth
 
 
@@ -38,8 +38,9 @@ def sessions() -> str:
         session_id = AUTH.create_session(email)
     else:
         abort(401)
-    resp = make_response('nothing, absolutely nothing')
-    resp.set_cookie('session_id', str(session_id))
+    Response.setCookie("session_id", session_id)
+    """resp = make_response('nothing, absolutely nothing')
+    resp.set_cookie('session_id', str(session_id))"""
     return jsonify({"email": email, "message": "logged in"})
 
 
@@ -52,6 +53,7 @@ def logout() -> str:
     session_id = request.cookies.get("session_id")
     if session_id is not None:
         AUTH.destroy_session(session_id)
+        return redirect('/')
 
 
 if __name__ == "__main__":
