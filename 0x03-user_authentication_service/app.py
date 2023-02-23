@@ -39,9 +39,9 @@ def sessions() -> str:
         session_id = AUTH.create_session(email)
     else:
         abort(401)
-    Response.setCookie("session_id", session_id)
-    """resp = make_response('nothing, absolutely nothing')
-    resp.set_cookie('session_id', str(session_id))"""
+    """Response.setCookie("session_id", session_id)"""
+    resp = make_response('nothing, absolutely nothing')
+    resp.set_cookie('session_id', str(session_id))
     return jsonify({"email": email, "message": "logged in"})
 
 
