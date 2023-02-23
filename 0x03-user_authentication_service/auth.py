@@ -50,6 +50,26 @@ class Auth:
         db.update_user(user.id, session_id=uid)
         return uid
 
+    def get_user_from_session_id(self, session_id: str) -> User:
+        """
+        If the session ID is None or no user is found, return None.
+        Otherwise return the corresponding user.
+        """
+        db = self._db
+        if session_id is not None:
+            try:
+                user = db.find_user_by(session_id=session_id)
+                return user
+            except NoResultFound:
+                pass
+        return None
+
+    def destroy_session(self, user_id: int) -> None:
+        """ updates the corresponding user’s session ID to None"""
+        db = self._db
+        db.update_user(user_id, session_id=None)
+
+
 
 def _hash_password(password: str) -> bytes:
     """returns a byted hashed password"""

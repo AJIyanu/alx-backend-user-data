@@ -43,5 +43,16 @@ def sessions() -> str:
     return jsonify({"email": email, "message": "logged in"})
 
 
+@app.route("/sessions", methods=['DELETE'], strict_slashes=False)
+def logout() -> str:
+    """Find the user with the requested session ID.
+    If the user exists destroy the session and redirect
+    the user to GET /. If the user does not exist, respond
+    with a 403 HTTP status."""
+    session_id = request.cookies.get("session_id")
+    if session_id is not None:
+        AUTH.destroy_session(session_id)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
