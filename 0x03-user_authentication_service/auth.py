@@ -70,7 +70,6 @@ class Auth:
         db.update_user(user_id, session_id=None)
 
 
-
 def _hash_password(password: str) -> bytes:
     """returns a byted hashed password"""
     import bcrypt
