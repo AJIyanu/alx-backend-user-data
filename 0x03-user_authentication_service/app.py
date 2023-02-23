@@ -67,7 +67,7 @@ def profile() -> str:
     """user profile getter"""
     res = request.headers.get("Cookie")
     if res is None:
-        return jsonify({"res": "got none"})
+        abort(403)
     res = res.split("session_id=")[-1]
     user = AUTH.get_user_from_session_id(res)
     if user is None:
