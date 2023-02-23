@@ -30,32 +30,36 @@ def users() -> str:
             return jsonify({"message": "email already registered"}), 400
 
 
-@app.route("/sessions", methods=['POST'], strict_slashes=False)
+@app.route("/sessions", methods=['POST', 'DELETE'], strict_slashes=False)
 def sessions() -> str:
-    """make a seesiom id cookes"""
+    """make a seesion id cookes"""
+    if request.method == 'DELETE':
+        res = request.headers.get('Cookie')
+        if res is not None:
+            res = res.split("session_id=")[-1]
+            user = AUTH.get_user_from_session_id(res)
+            if user is None:
+                abort(403)
+            AUTH.destroy_session(user.id)
+            return redirect(url_for('payload'))
+        abort(403)
     email = request.form.get("email")
     password = request.form.get("password")
     if AUTH.valid_login(email, password):
         session_id = AUTH.create_session(email)
     else:
         abort(401)
-    """Response.setCookie("session_id", session_id)"""
     resp = make_response(jsonify({"email": email, "message": "logged in"}))
     resp.set_cookie('session_id', session_id)
     return resp
 
 
-@app.route("/sessions", methods=['DELETE'], strict_slashes=False)
-def logout() -> None:
-    """Find the user with the requested session ID.
-    If the user exists destroy the session and redirect
-    the user to GET /. If the user does not exist, respond
-    with a 403 HTTP status."""
-    session_id = request.headers.get("Cookie")
-    if session_id is not None:
-        AUTH.destroy_session(session_id)
-        return redirect(url_for('payload'))
-    abort(403)
+@app.route("/termux", methods=['GET'], strict_slashes=False)
+def termux_test() -> make_response:
+    """for termux testing only"""
+    resp = make_response(jsonify({"set cookie": "cookie"}))
+    resp.set_cookie("session_id", "setting cookies")
+    return resp
 
 
 if __name__ == "__main__":
