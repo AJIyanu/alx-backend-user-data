@@ -62,5 +62,16 @@ def termux_test() -> make_response:
     return resp
 
 
+@app.route("/profile", methods=['GET'], strict_slashes=False)
+def profile() -> str:
+    """user profile getter"""
+    res request.headers.get("Cookie")
+    res = res.split("session_id")[-1]
+    user = AUTH.get_user_from_session_id(res)
+    if user is None:
+        abort(403)
+    return jsonify({"email": user.email})
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
