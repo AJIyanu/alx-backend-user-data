@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Set variables
+host="1f9e50884475.29ecdae5.alx-cod.online"
+password="290f53aaf24e09831e3d"
+
+#ssh 1f9e50884475@1f9e50884475.29ecdae5.alx-cod.online
+
+# Install sshpass if it is not already installed
+if ! command -v sshpass > /dev/null; then
+    sudo apt-get update && sudo apt-get install -y sshpass
+fi
+
+# SSH into the remote server
+sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$host"
+
