@@ -39,7 +39,7 @@ def sessions() -> str:
     else:
         abort(401)
     resp = make_response('nothing, absolutely nothing')
-    resp.set_cookie('session_id', str(ession_id))
+    resp.set_cookie('session_id', str(session_id))
     return jsonify({"email": email, "message": "logged in"})
 
 
