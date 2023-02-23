@@ -65,10 +65,10 @@ def termux_test() -> make_response:
 @app.route("/profile", methods=['GET'], strict_slashes=False)
 def profile() -> str:
     """user profile getter"""
-    res request.headers.get("Cookie")
+    res = request.headers.get("Cookie")
     if res is None:
-        abort(403)
-    res = res.split("session_id")[-1]
+        return jsonify({"res": "got none"})
+    res = res.split("session_id=")[-1]
     user = AUTH.get_user_from_session_id(res)
     if user is None:
         abort(403)
