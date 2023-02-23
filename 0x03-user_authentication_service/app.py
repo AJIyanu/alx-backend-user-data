@@ -51,7 +51,7 @@ def logout() -> None:
     If the user exists destroy the session and redirect
     the user to GET /. If the user does not exist, respond
     with a 403 HTTP status."""
-    session_id = request.cookies.get("session_id")
+    session_id = request.headers.get("Cookie")
     if session_id is not None:
         AUTH.destroy_session(session_id)
         return redirect(url_for('payload'))
