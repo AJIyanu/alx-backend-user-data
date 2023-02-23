@@ -3,6 +3,7 @@
 
 
 from flask import Flask, jsonify, request, make_response, abort, redirect
+from flask import url_for
 from auth import Auth
 
 
@@ -53,7 +54,7 @@ def logout() -> None:
     session_id = request.cookies.get("session_id")
     if session_id is not None:
         AUTH.destroy_session(session_id)
-        return redirect('/')
+        return redirect(url_for('payload'))
     abort(403)
 
 
