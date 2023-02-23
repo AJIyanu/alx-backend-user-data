@@ -45,7 +45,7 @@ def sessions() -> str:
 
 
 @app.route("/sessions", methods=['DELETE'], strict_slashes=False)
-def logout() -> str:
+def logout() -> None:
     """Find the user with the requested session ID.
     If the user exists destroy the session and redirect
     the user to GET /. If the user does not exist, respond
@@ -54,6 +54,7 @@ def logout() -> str:
     if session_id is not None:
         AUTH.destroy_session(session_id)
         return redirect('/')
+    abort(403)
 
 
 if __name__ == "__main__":
