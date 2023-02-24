@@ -20,8 +20,8 @@ def log_in_wrong_password(email: str, password: str) -> None:
     """test wrong password"""
     params = {"email": email, "password": password}
     res = requests.post(url + "/sessions", data=params)
-    print(res.content)
     assert res.status_code == 401
+    return
 
 
 def log_in(email: str, password: str) -> str:
@@ -37,17 +37,20 @@ def profile_unlogged() -> None:
     """log me out"""
     res = requests.get(url + "/sessions")
     assert res.status_code == 403
+    return
 
 
 def profile_logged(session_id: str) -> None:
     """profile logged in"""
     res = requests.get(url + "/profile")
     assert res.status_code == 200
+    return
 
 
 def log_out(session_id: str) -> None:
     res = requests.delete(url + "/sessions")
     assert res.status_code == 403
+    return
 
 
 def reset_password_token(email: str) -> str:
@@ -63,6 +66,7 @@ def update_password(email: str, reset_token: str, new_password: str) -> None:
     params = {"email": email, "reset_token": reset_token, "new_password": new_password}
     res = requests.put(url + "reset_password", data=params)
     assert res.status_code == 200
+    return
 
 EMAIL = "guillaume@holberton.io"
 PASSWD = "b4l0u"
