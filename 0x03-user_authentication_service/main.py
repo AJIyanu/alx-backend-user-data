@@ -33,7 +33,8 @@ def log_in(email: str, password: str) -> str:
 
 def profile_unlogged() -> None:
     """log me out"""
-
+    res = requests.get(url + "/sessions")
+    assert res.status_code == 403
 
 
 def profile_logged(session_id: str) -> None:
