@@ -6,6 +6,7 @@ import requests
 
 url = "http://0.0.0.0:5000"
 
+
 def register_user(email: str, password: str) -> None:
     """checks register user"""
     params = {"email": email, "password": password}
@@ -63,10 +64,12 @@ def reset_password_token(email: str) -> str:
 
 def update_password(email: str, reset_token: str, new_password: str) -> None:
     """updates password with token"""
-    params = {"email": email, "reset_token": reset_token, "new_password": new_password}
+    params = {"email": email, "reset_token": reset_token,
+              "new_password": new_password}
     res = requests.put(url + "reset_password", data=params)
     assert res.status_code == 200
     return
+
 
 EMAIL = "guillaume@holberton.io"
 PASSWD = "b4l0u"
