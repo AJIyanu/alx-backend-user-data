@@ -88,8 +88,7 @@ class Auth:
         except NoResultFound:
             raise ValueError
         password = _hash_password(password)
-        db.update_user(user.id, hashed_password=password)
-
+        db.update_user(user.id, hashed_password=password, reset_token=None)
 
 
 def _hash_password(password: str) -> bytes:
