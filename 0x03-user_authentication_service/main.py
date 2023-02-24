@@ -9,23 +9,25 @@ url = "http://0.0.0.0:5000"
 def register_user(email: str, password: str) -> None:
     """checks register user"""
     params = {"email": email, "password": password}
-    res = requests.post(url + "/users", params=params)
+    res = requests.post(url + "/users", data=params)
     assert res.status_code == 200
-    res = requests.post(url + "/users", params=params)
+    res = requests.post(url + "/users", data=params)
     assert res.status_code == 400
+    return
 
 
 def log_in_wrong_password(email: str, password: str) -> None:
     """test wrong password"""
     params = {"email": email, "password": password}
-    res = requests.post(url + "/sessions", params=params)
+    res = requests.post(url + "/sessions", data=params)
+    print(res.content)
     assert res.status_code == 401
 
 
 def log_in(email: str, password: str) -> str:
     """log in with real password"""
     params = {"email": email, "password": password}
-    res = requests.post(url + "/sessions", params=params)
+    res = requests.post(url + "/sessions", data=params)
     session_id = res.cookies.get("session_id")
     assert res.status_code == 200
     return session_id
@@ -50,7 +52,7 @@ def log_out(session_id: str) -> None:
 
 def reset_password_token(email: str) -> str:
     """resets email password"""
-    res = requests.post(url + "/reset_password", params={"email": email})
+    res = requests.post(url + "/reset_password", data={"email": email})
     print(res.content)
     print(type(res.content))
     assert res.status_code == 200
@@ -59,7 +61,7 @@ def reset_password_token(email: str) -> str:
 def update_password(email: str, reset_token: str, new_password: str) -> None:
     """updates password with token"""
     params = {"email": email, "reset_token": reset_token, "new_password": new_password}
-    res = requests.put(url + "reset_password", params=params)
+    res = requests.put(url + "reset_password", data=params)
     assert res.status_code == 200
 
 EMAIL = "guillaume@holberton.io"
