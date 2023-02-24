@@ -80,7 +80,7 @@ def get_reset_password_token() -> str:
     """password reset token generator"""
     email = request.form.get('email')
     try:
-        token = Auth.get_reset_password_token(email)
+        token = AUTH.get_reset_password_token(email)
     except ValueError:
         abort(403)
     return jsonify({"email": email, "reset_token": token})
