@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/b7in/env python3
 """
 Hashes a password
 """
@@ -79,6 +79,17 @@ class Auth:
         token = _generate_uuid()
         db.update_user(user.id, reset_token=token)
         return token
+
+    def update_password(self, reset_token: str, password: str) -> None:
+        """reset password from token"""
+        db = self._db
+        try:
+            user = db.find_user_by(reset_token=reset_token)
+        except NoResultFound:
+            raise ValueError
+        password = _hash_password(password)
+        db.update_user(user.id, hashed_password=password)
+
 
 
 def _hash_password(password: str) -> bytes:
