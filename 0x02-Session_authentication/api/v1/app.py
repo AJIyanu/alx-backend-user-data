@@ -37,7 +37,8 @@ def handle_before():
         return None
     if auth.current_user(request) is None:
         abort(403)
-        return None
+    request.current_user = auth.current_user(request)
+    return None
 
 
 @app.errorhandler(404)
