@@ -3,7 +3,7 @@
 a new authentication mechanism"""
 
 
-from auth import Auth
+from .auth import Auth
 
 
 class SessionAuth(Auth):
