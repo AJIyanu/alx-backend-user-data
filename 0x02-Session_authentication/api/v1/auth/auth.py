@@ -4,6 +4,9 @@ This is authentication module longer long
 """
 
 
+import os
+
+
 class Auth:
     """Authenticate me please
     how long do I  need"""
@@ -37,3 +40,10 @@ class Auth:
     def current_user(self, request=None) -> TypeVar('User'):
         """does nothing too, returns none"""
         return None
+
+    def session_cookie(self, request=None):
+        """returns cookie from a request"""
+        if request is None:
+            return None
+        cookie = os.getenv('SESSION_NAME')
+        return request.cookies.get(cookie)
