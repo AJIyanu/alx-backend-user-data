@@ -23,3 +23,4 @@ class SessionAuth(Auth):
             return None
         uid = uuid.uuid4()
         self.user_id_by_session_id.update({uid: user_id})
+        return uid
