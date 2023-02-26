@@ -29,10 +29,10 @@ def view_one_user(user_id: str = None) -> str:
         return jsonify(["user_id is None"])
     user = User.get(user_id)
     if user is None:
-        return jsonify(["I didnt get a user"])
-    if user_id == "me":
-        if request.current_user is None:
-            return jsonify(["no shit"])
+        if user_id == "me":
+            if request.current_user is None:
+                return jsonify(["no shit"])
+            user = request.current_user
         return jsonify(user.to_json())
 
 
