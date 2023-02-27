@@ -30,7 +30,7 @@ if auth_type == "session_auth":
 def handle_before():
     """handles stuff before request is made"""
     nothing = ['/api/v1/status/', '/api/v1/unauthorized/',
-               '/api/v1/forbidden/', '/api/v1/auth_session/login/']
+               '/api/v1/forbidden/', '/api/v1/auth_session/login']
     if auth is None:
         return
     if auth.require_auth(request.path, nothing) is False:
