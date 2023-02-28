@@ -3,9 +3,15 @@
 a new authentication mechanism"""
 
 
+import sys
+import os
+parent_dir = os.path.abspath(os.path.join('models'))
+sys.path.insert(0, parent_dir)
+
+
 import uuid
 from .auth import Auth
-from ....models.user import User
+from models.user import User
 
 
 class SessionAuth(Auth):
