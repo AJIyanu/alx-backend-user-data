@@ -6,7 +6,7 @@ import re
 import logging
 
 
-PII_FIELDS = ("ssn", "password", "ip", "last_login", "user_agent")
+PII_FIELDS = ("ssn", "password", "ip", "phone", "user_agent")
 
 
 def filter_datum(fields: List[str], redaction: str,
