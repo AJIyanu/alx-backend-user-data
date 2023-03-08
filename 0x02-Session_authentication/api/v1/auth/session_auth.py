@@ -3,15 +3,14 @@
 a new authentication mechanism"""
 
 
+from .auth import Auth
+import uuid
+
+
 import sys
 import os
 parent_dir = os.path.abspath(os.path.join('models'))
 sys.path.insert(0, parent_dir)
-
-
-import uuid
-from .auth import Auth
-from models.user import User
 
 
 class SessionAuth(Auth):
@@ -41,6 +40,7 @@ class SessionAuth(Auth):
 
     def current_user(self, request=None):
         """returns user based on cookies"""
+        from models.user import User
         cookie = self.session_cookie(request)
         user_id = self.user_id_for_session_id(cookie)
         return User.get(user_id)
