@@ -54,6 +54,8 @@ class SessionAuth(Auth):
         if not self.user_id_for_session_id(self.session_cookie(request)):
             return False
         key = self.user_id_for_session_id(self.session_cookie(request))
-        self.user_id_by_session_id = {key: value for key,
-                                      value in self.user_id_by_session_id.items() if value != key}
+        sessions = self.user_id_by_session_id
+        for uid in sessions:
+            if sessions[uid] == key:
+                self.user_id_by_session_id.pop(uid)
         return True
