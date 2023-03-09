@@ -27,8 +27,8 @@ class SessionExpAuth(SessionAuth):
         sess_dict = {"user_id": user_id,
                      "created_at": datetime.now()
                      }
-        self.user_id_by_session_id = {session: sess_dict}
-        return self.user_id_by_session_id
+        self.user_id_by_session_id.update({session: sess_dict})
+        return session
 
     def user_id_for_session_id(self, session_id=None):
         """overload method here"""
@@ -39,11 +39,12 @@ class SessionExpAuth(SessionAuth):
         if self.session_duration <= 0:
             sess_dict = self.user_id_by_session_id.get(session_id)
             return sess_dict.get("user_id")
-        created = self.user_id_by_session_id.get("created_at")
+        created = self.user_id_by_session_id.get(session_id)
+        created = created.get("created_at")
         if created is None:
             return None
         current = created + timedelta(seconds=self.session_duration)
-        if datetime.now() < current:
+        if datetime.now() > current:
             return None
         sess_dict = self.user_id_by_session_id.get(session_id)
         return sess_dict.get('user_id')
