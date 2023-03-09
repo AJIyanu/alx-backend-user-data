@@ -30,7 +30,7 @@ def login() -> str:
     session_name = getenv("SESSION_NAME")
     user_json = user.to_json()
     out = jsonify(user_json)
-    out.set_cookie(session_name, session_id)
+    out.set_cookie(session_name, session_id.encode())
     return out
 
 
