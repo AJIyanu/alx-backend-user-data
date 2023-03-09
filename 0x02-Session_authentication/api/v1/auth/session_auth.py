@@ -38,9 +38,21 @@ class SessionAuth(Auth):
             return None
         return self.user_id_by_session_id.get(session_id)
 
-    def current_user(self, request=None):
+    def current_user(self, request=None) -> int:
         """returns user based on cookies"""
         from models.user import User
         cookie = self.session_cookie(request)
         user_id = self.user_id_for_session_id(cookie)
         return User.get(user_id)
+
+    def destroy_session(self, request=None) -> bool:
+        """destroys session and returns a bool"""
+        if request is None:
+            return False
+        if not self.session_cookie(request):
+            return False
+        if not self.user_id_for_session_id(self.session_cookie(request)):
+            return False
+        key = self.user_id_for_session_id(self.session_cookie(request))
+        self.user_id_by_session_id.pop(key)
+        return True
