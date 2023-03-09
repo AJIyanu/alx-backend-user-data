@@ -28,5 +28,6 @@ def login() -> str:
     session_id = auth.create_session(user.id)
     session_name = getenv("SESSION_NAME")
     user_json = user.to_json()
-    session[session_name] = session_id
-    return user_json
+    out = jsonify(user_json)
+    out.set_cookie(session_name, session_id)
+    return out
