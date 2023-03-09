@@ -1,4 +1,3 @@
-# pylint: disable=relative-beyond-top-level
 #!/usr/bin/env python3
 """
 create expiry date for session.
