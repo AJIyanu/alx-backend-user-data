@@ -9,7 +9,7 @@ from flask import session, jsonify, request
 from models.user import User
 from os import getenv
 
-@app_views.route("/auth_session/login", method=['POST'], strict_slashes=False)
+@app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def login() -> str:
     """retrieve users instance based on email"""
     email = request.form.get("email")
