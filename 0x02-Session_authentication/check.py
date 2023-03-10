@@ -1,29 +1,32 @@
 #!/usr/bin/python3
 """ Check response
 """
+import requests
+
 
 if __name__ == "__main__":
-
     try:
-        from api.v1.auth.session_auth import SessionAuth
-        sa = SessionAuth()
-        user_id_1 = "User 1"
-        session_id_1 = sa.create_session(user_id_1)
-        if session_id_1 is None:
-            print("Can't create session ID")
+        from models.user_session import UserSession
+
+        user_id = "User10"
+        session_id = "The User 10 session ID"
+
+        user_session = UserSession()
+        user_session.user_id = user_id
+        user_session.session_id = session_id
+        user_session.save()
+
+        from api.v1.auth.session_db_auth import SessionDBAuth
+        sbda = SessionDBAuth()
+
+        user_id_r = sbda.user_id_for_session_id(session_id)
+        if user_id_r is None:
+            print("user_id_for_session_id should return the User ID linked to the Session ID")
             exit(1)
-       
-        print(session_id_1)
-        new_user_id_1 = sa.user_id_for_session_id(session_id_1)
-        print(new_user_id_1)
-        if new_user_id_1 is None:
-            print("user_id_for_session_id doesn't return the user ID linked to the session ID")
+        if user_id_r != user_id:
+            print("user_id_for_session_id should return the User ID linked to the Session ID")
             exit(1)
-        
-        if new_user_id_1 != user_id_1:
-            print("user_id_for_session_id doesn't return the user ID linked to the session ID created previously")
-            exit(1)
-        
+
         print("OK", end="")
     except:
         import sys
