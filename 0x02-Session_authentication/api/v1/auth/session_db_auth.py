@@ -5,6 +5,7 @@ from models.user_session import UserSession
 from .session_exp_auth import SessionExpAuth
 from datetime import datetime, timedelta
 
+
 class SessionDBAuth(SessionExpAuth):
     """session suth db"""
 
@@ -38,7 +39,7 @@ class SessionDBAuth(SessionExpAuth):
         if datetime.now() > current:
             return None
         user = UserSession.search({"session_id": session_id})
-        return user[0].user_id if len(user) > 0 else None 
+        return user[0].user_id if len(user) > 0 else None
 
     def destroy_session(self, request=None) -> bool:
         """destroy session based on cookie"""
