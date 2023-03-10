@@ -20,9 +20,11 @@ if __name__ == "__main__":
 
         user_id_r = sbda.user_id_for_session_id(session_id)
         if user_id_r is None:
+            print("got: {}".format(user_id_r))
             print("user_id_for_session_id should return the User ID linked to the Session ID")
             exit(1)
         if user_id_r != user_id:
+            print(user_id_r, user_id_r)
             print("user_id_for_session_id should return the User ID linked to the Session ID")
             exit(1)
 

@@ -26,11 +26,9 @@ class SessionDBAuth(SessionExpAuth):
         """overload user id for session"""
         if session_id is None:
             return None
-        if session_id not in self.user_id_by_session_id:
-            return None
         if self.session_duration <= 0:
-            sess_dict = self.user_id_by_session_id.get(session_id)
-            return sess_dict.get("user_id")
+            user = UserSession.search({"session_id": session_id})
+            return user[0].user_id if len(user) > 0 else None
         created = self.user_id_by_session_id.get(session_id)
         created = created.get("created_at")
         if created is None:
