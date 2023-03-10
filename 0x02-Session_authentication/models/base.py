@@ -26,7 +26,7 @@ class Base():
         self.id = kwargs.get('id', str(uuid.uuid4()))
         if kwargs.get('created_at') is not None:
             self.created_at = datetime.strptime(kwargs.get('created_at'),
-                                                TIMESTAMP_FORMAT)
+                                            TIMESTAMP_FORMAT)
         else:
             self.created_at = datetime.utcnow()
         if kwargs.get('updated_at') is not None:
@@ -133,5 +133,5 @@ class Base():
                 if (getattr(obj, k) != v):
                     return False
             return True
-        
+
         return list(filter(_search, DATA[s_class].values()))
