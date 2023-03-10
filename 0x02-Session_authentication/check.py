@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ Check response
 """
-import requests
 
 
 if __name__ == "__main__":
