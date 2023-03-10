@@ -2,7 +2,6 @@
 """stores session in database"""
 
 
-
 from .base import Base
 import uuid
 
