@@ -1,4 +1,4 @@
-#!/usr/b7in/env python3
+#!/usr/bin/env python3
 """
 Hashes a password
 """
